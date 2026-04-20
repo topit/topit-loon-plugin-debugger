@@ -1,0 +1,18 @@
+#!name=BOC 调试工具注入
+#!desc=自动识别 boc.inke.cn 和 testqaboc.inke.cn 的 HTML 页面，注入 Eruda 和/或 vConsole 调试工具，用于移动端 H5 页面调试
+#!author=topit
+#!homepage=https://github.com/topit/topit-loon-plugin-debugger
+#!icon=https://raw.githubusercontent.com/niconiemi/loon-plugins/main/icons/debugger.png
+#!system=ios
+#!loon_version=3.2.1(730)
+
+[Argument]
+enable_plugin = switch,true,tag=启用插件,desc=总开关，控制整个插件是否生效
+enable_eruda = switch,true,tag=注入 Eruda,desc=是否在页面中注入 Eruda 调试工具
+enable_vconsole = switch,true,tag=注入 vConsole,desc=是否在页面中注入 vConsole 调试工具
+
+[Script]
+http-response ^https?://(boc\.inke\.cn|testqaboc\.inke\.cn)/ script-path=https://raw.githubusercontent.com/topit/topit-loon-plugin-debugger/main/inject_debugger.js,requires-body=true,tag=注入调试工具,argument=[{enable_eruda},{enable_vconsole}],enable={enable_plugin}
+
+[MITM]
+hostname = boc.inke.cn,testqaboc.inke.cn
